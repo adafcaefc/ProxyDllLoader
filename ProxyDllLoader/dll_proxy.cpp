@@ -28,7 +28,7 @@
     namespace __PROXY_NAMESPACE__ { FARPROC original_##name; }       \
     __volatile __declspec(naked) __declspec(noinline) void _##name() \
     {                                                                \
-        __asm jmp[DLL_PROXY_ORIGINAL(name)]              \
+        __asm jmp[DLL_PROXY_ORIGINAL(name)]                          \
     }
 
 #define __DLL_NAME__ DLL_PROXY_EXPORT
