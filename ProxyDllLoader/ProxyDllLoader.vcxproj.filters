@@ -21,12 +21,21 @@
     <ClInclude Include="dll_proxy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="file_utils.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dll_loader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dll_proxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dll_loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

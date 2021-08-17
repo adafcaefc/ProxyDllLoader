@@ -1,10 +1,10 @@
 #include <Windows.h>
 #include "dll_proxy.h"
+#include "dll_loader.h"
 
 DWORD WINAPI _dll_main(LPVOID lpParam)
 {
-	// Put your code here
-	MessageBoxA(NULL, "Proxy loaded.", "Success!", NULL);
+	__load_dll__();
 	return TRUE;
 }
 

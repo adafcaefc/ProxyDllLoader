@@ -151,11 +151,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="dll_loader.h" />
     <ClInclude Include="dll_proxy.h" />
     <ClInclude Include="dll_proxy_symbols.h" />
+    <ClInclude Include="file_utils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="dll_loader.cpp" />
     <ClCompile Include="dll_proxy.cpp" />
   </ItemGroup>
   <ItemGroup>
