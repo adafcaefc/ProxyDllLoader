@@ -5,7 +5,7 @@
 DWORD WINAPI _dll_main(LPVOID lpParam)
 {
 	__load_dll__();
-	return TRUE;
+	FreeLibraryAndExitThread(reinterpret_cast<HMODULE>(lpParam), NULL);
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
@@ -13,6 +13,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 	switch (dwReason)
 	{
 	case DLL_PROCESS_ATTACH:
+		DisableThreadLibraryCalls(hModule);
 		if (__load_proxy__()) { CreateThread(nullptr, NULL, _dll_main, hModule, NULL, nullptr); }
 		break;
 

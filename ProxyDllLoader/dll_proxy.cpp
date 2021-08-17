@@ -2,10 +2,18 @@
 #include <Windows.h>
 #include <filesystem>
 
+#define __PROXY_MODULE__    h_proxy_dll
+#define __PROXY_PATH__      proxy_dll_path
 #define __PROXY_NAMESPACE__ proxy
 
-#define DLL_PROXY_LOAD_RAW(handle, name) original_##name = GetProcAddress(handle, ###name)
-#define DLL_PROXY_LOAD(name) DLL_PROXY_LOAD_RAW(h_version_dll, name)
+#ifdef MAX_PATH
+    #define __PROXY_MAX_PATH__ MAX_PATH
+#else
+    #define __PROXY_MAX_PATH__ 260
+#endif // MAX_PATH
+
+#define DLL_PROXY_LOAD_RAW(handle, name) __PROXY_NAMESPACE__::original_##name = GetProcAddress(handle, ###name)
+#define DLL_PROXY_LOAD(name) DLL_PROXY_LOAD_RAW(__PROXY_MODULE__, name)
 
 #define DLL_PROXY_EXPORT(name)                                       \
     namespace __PROXY_NAMESPACE__ { FARPROC original_##name; }       \
@@ -20,13 +28,18 @@
 
 namespace __PROXY_NAMESPACE__
 {
-	bool load()
+	static std::filesystem::path get_system_directory()
 	{
-		const std::unique_ptr<char[]> system_directory(std::make_unique<char[]>(MAX_PATH));
-		::GetSystemDirectoryA(system_directory.get(), MAX_PATH);
-		const auto version_dll_path = std::filesystem::path(system_directory.get()) / "xinput9_1_0.dll";
-		auto h_version_dll = LoadLibraryW(version_dll_path.wstring().c_str());
-		if (!h_version_dll) return false;
+		const auto system_directory(std::make_unique<char[]>(__PROXY_MAX_PATH__));
+		::GetSystemDirectoryA(system_directory.get(), __PROXY_MAX_PATH__);
+		return std::filesystem::path(system_directory.get());
+	}
+
+	static bool load()
+	{
+		const auto __PROXY_PATH__   = get_system_directory() / "xinput9_1_0.dll";
+		const auto __PROXY_MODULE__ = LoadLibraryW(__PROXY_PATH__.wstring().c_str());
+		if (!__PROXY_MODULE__) return false;
 		#define __DLL_NAME__ DLL_PROXY_LOAD
 		#include "dll_proxy_symbols.h"
 		#undef __DLL_NAME__
