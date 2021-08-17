@@ -20,14 +20,15 @@
 
 #define DLL_PROXY_ORIGINAL(name) __PROXY_NAMESPACE__::original_##name
 #define DLL_PROXY_ASSERT(condition) if ((condition) == false) return false;
+
 #define DLL_PROXY_LOAD_RAW(handle, name) DLL_PROXY_ORIGINAL(name) = GetProcAddress(handle, ###name)
-#define DLL_PROXY_LOAD(name) DLL_PROXY_LOAD_RAW(__PROXY_MODULE__, name)
+#define DLL_PROXY_LOAD(name)             DLL_PROXY_LOAD_RAW(__PROXY_MODULE__, name)
 
 #define DLL_PROXY_EXPORT(name)                                       \
     namespace __PROXY_NAMESPACE__ { FARPROC original_##name; }       \
     __volatile __declspec(naked) __declspec(noinline) void _##name() \
     {                                                                \
-        __asm jmp[__PROXY_NAMESPACE__::original_##name]              \
+        __asm jmp[DLL_PROXY_ORIGINAL(name)]              \
     }
 
 #define __DLL_NAME__ DLL_PROXY_EXPORT
