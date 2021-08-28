@@ -5,7 +5,6 @@
 DWORD WINAPI _dll_main(LPVOID lpParam)
 {
 	__load_dll__();
-	FreeLibraryAndExitThread(reinterpret_cast<HMODULE>(lpParam), NULL);
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
