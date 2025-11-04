@@ -1,6 +1,18 @@
-LIBRARY "XINPUT9_1_0"
+LIBRARY "VERSION"
 EXPORTS
-	XInputGetCapabilities           = _XInputGetCapabilities
-	XInputGetDSoundAudioDeviceGuids = _XInputGetDSoundAudioDeviceGuids
-	XInputGetState                  = _XInputGetState
-	XInputSetState                  = _XInputGetState
+	VerFindFileA				= _VerFindFileA
+	VerFindFileW				= _VerFindFileW
+	VerInstallFileA				= _VerInstallFileA
+	VerInstallFileW				= _VerInstallFileW
+	GetFileVersionInfoSizeA		= _GetFileVersionInfoSizeA
+	GetFileVersionInfoSizeW		= _GetFileVersionInfoSizeW
+	GetFileVersionInfoA			= _GetFileVersionInfoA
+	GetFileVersionInfoW			= _GetFileVersionInfoW
+	GetFileVersionInfoSizeExA	= _GetFileVersionInfoSizeExA
+	GetFileVersionInfoSizeExW 	= _GetFileVersionInfoSizeExW
+	GetFileVersionInfoExA		= _GetFileVersionInfoExA
+	GetFileVersionInfoExW		= _GetFileVersionInfoExW
+	VerLanguageNameA			= _VerLanguageNameA
+	VerLanguageNameW			= _VerLanguageNameW
+	VerQueryValueA				= _VerQueryValueA
+	VerQueryValueW				= _VerQueryValueW

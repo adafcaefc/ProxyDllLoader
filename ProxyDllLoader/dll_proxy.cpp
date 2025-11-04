@@ -37,31 +37,31 @@
 
 namespace __PROXY_NAMESPACE__
 {
-	static std::filesystem::path get_system_directory()
-	{
-		const auto system_directory(std::make_unique<TCHAR[]>(__PROXY_MAX_PATH__));
-		::GetSystemDirectory(system_directory.get(), __PROXY_MAX_PATH__);
-		return std::filesystem::path(system_directory.get());
-	}
+    static std::filesystem::path get_system_directory()
+    {
+        const auto system_directory(std::make_unique<TCHAR[]>(__PROXY_MAX_PATH__));
+        ::GetSystemDirectory(system_directory.get(), __PROXY_MAX_PATH__);
+        return std::filesystem::path(system_directory.get());
+    }
 
-	static bool load()
-	{
-		const auto __PROXY_PATH__ = get_system_directory() / TEXT("xinput9_1_0.dll");
-		DLL_PROXY_ASSERT(std::filesystem::exists(__PROXY_PATH__));
+    static bool load()
+    {
+        const auto __PROXY_PATH__ = get_system_directory() / TEXT("version.dll");
+        DLL_PROXY_ASSERT(std::filesystem::exists(__PROXY_PATH__));
 
-		const auto __PROXY_MODULE__ = ::LoadLibrary(__PROXY_PATH__.__PROXY_STR__().c_str());
-		DLL_PROXY_ASSERT(__PROXY_MODULE__ != NULL);
+        const auto __PROXY_MODULE__ = ::LoadLibrary(__PROXY_PATH__.__PROXY_STR__().c_str());
+        DLL_PROXY_ASSERT(__PROXY_MODULE__ != NULL);
 
-		#define __DLL_NAME__ DLL_PROXY_LOAD
-		#include "dll_proxy_symbols.h"
-		#undef __DLL_NAME__
+        #define __DLL_NAME__ DLL_PROXY_LOAD
+        #include "dll_proxy_symbols.h"
+        #undef __DLL_NAME__
 
-		#define __DLL_NAME__(name) DLL_PROXY_ASSERT(DLL_PROXY_ORIGINAL(name) != NULL)
-		#include "dll_proxy_symbols.h"
-		#undef __DLL_NAME__
+        //#define __DLL_NAME__(name) DLL_PROXY_ASSERT(DLL_PROXY_ORIGINAL(name) != NULL)
+        //#include "dll_proxy_symbols.h"
+        //#undef __DLL_NAME__
 
-		return true;
-	}
+        return true;
+    }
 }
 
 bool __load_proxy__() { return __PROXY_NAMESPACE__::load(); }
